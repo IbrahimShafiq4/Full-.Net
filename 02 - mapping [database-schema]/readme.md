@@ -1,43 +1,4 @@
-الملف ده بيشرح **تحويل ER Diagram إلى Relational Database**
-من أول تعريفات الكيانات لحد كل أنواع العلاقات والـ attributes.
-
-الهدف:
-تفهم *إزاي أي رسمة ERD تتحول لجداول Database صح*.
-
----
-
-# 1️⃣ Basic Relational Database Definitions
-
-## Entity (Table)
-الـ Entity هو كيان حقيقي في الواقع وليه بيانات.
-لما بنحوّله لـ Database بيبقى Table.
-
-أمثلة:
-- Student
-- Employee
-- Course
-- Department
-
----
-
-## Attribute (Column)
-الـ Attribute هو خاصية من خصائص الـ Entity.
-ولما يتحول Database بيبقى Column.
-
----
-
-## Record (Row / Tuple)
-الـ Record هو صف واحد في الجدول
-وبيمثل كيان واحد بس.
-
----
-
-## Database
-الـ Database هي مجموعة Tables مترابطة بعلاقات.
-
----
-
-# 2️⃣ أنواع الـ Attributes في ERD وازاي نعملها Mapping
+# 1️⃣ Types of Attributes & Mapping
 
 ## 1️⃣ Simple Attribute
 Attribute بسيط مش متقسم.
@@ -47,25 +8,25 @@ Attribute بسيط مش متقسم.
 - salary
 
 ### Mapping:
-- يتحول Column عادي في الجدول.
+- Column عادي في الجدول.
 
 ---
 
 ## 2️⃣ Composite Attribute
-Attribute متقسم لأكتر من جزء.
+Attribute متقسم لأجزاء.
 
 مثال:
 ```
 
-Name = (Fname, Lname)
-Address = (Street, City)
+Name → (Fname, Lname)
+Address → (Street, City)
 
 ````
 
 ### Mapping:
-- بنفك الـ Composite Attribute
-- وكل جزء يتحول Column لوحده
-- الـ Attribute الكبير **مش بيتعمله Column**
+- نفك الـ Composite
+- كل جزء Column
+- الـ Attribute الكبير **مش بيتخزن**
 
 مثال:
 ```text
@@ -82,19 +43,16 @@ STUDENT(
 
 ## 3️⃣ Derived Attribute
 
-Attribute بيتحسب من Attribute تاني.
+Attribute بيتحسب من غيره.
 
 مثال:
 
-* age (متحسب من date_of_birth)
+* age (من date_of_birth)
 
 ### Mapping:
 
-* ❌ مش بيتخزن في Database
-* ✔ بيتحسب وقت الحاجة
-
-ليه؟
-عشان نتجنب التكرار وعدم التناسق.
+* ❌ لا يتحول Column
+* ✔ يتحسب وقت الحاجة
 
 ---
 
@@ -109,9 +67,9 @@ Attribute ليه أكتر من قيمة.
 
 ### Mapping:
 
-* بنعمل Table جديد
-* نحط Primary Key بتاع الـ Entity
-* * الـ Attribute نفسه
+* Table جديد
+* PK بتاع الـ Entity
+* * Attribute
 * الاتنين = Composite PK
 
 مثال:
@@ -125,73 +83,28 @@ STUDENT_PHONE(
 
 ---
 
-# 3️⃣ Types of Keys & Mapping
+# 2️⃣ Types of Entities & Mapping
 
-## Primary Key (PK)
+## Strong Entity
 
-* Unique
-* Not Null
-* ثابت
-
----
-
-## Composite Primary Key
-
-Primary Key مكوّن من أكتر من Attribute.
-
-بيستخدم في:
-
-* Weak Entity
-* M:N Relationship
-* Multi-valued Attribute
-
----
-
-## Foreign Key (FK)
-
-* Primary Key في Table
-* Foreign Key في Table تاني
-* بيربط الجداول ببعض
-
----
-
-# 4️⃣ Types of Entities & Mapping
-
-## 1️⃣ Strong Entity
-
-كيان مستقل
-ليه Primary Key خاص بيه.
+* كيان مستقل
+* ليه PK خاص بيه
 
 ### Mapping:
 
-* Table مستقل
-* Primary Key واضح
-
-مثال:
-
-```text
-STUDENT(
-  student_id PK,
-  name,
-  age
-)
-```
+* Table عادي
 
 ---
 
-## 2️⃣ Weak Entity
+## Weak Entity
 
-كيان:
-
-* مالوش Primary Key لوحده
-* بيعتمد على Owner Entity
+* مالوش PK لوحده
+* بيعتمد على Owner
 
 ### Mapping:
 
-1. نعمل Table
-2. ناخد PK بتاع الـ Owner
-3. نضيف Partial Key
-4. الاتنين = Composite PK
+* PK Owner + Partial Key
+* Composite PK
 
 مثال:
 
@@ -205,86 +118,166 @@ DEPENDENT(
 
 ---
 
-# 5️⃣ Relationship Mapping (الأهم)
+# 3️⃣ Relationship Mapping – ALL CASES
 
-## Step 0️⃣
+## 🔹 1 : 1 Relationship
 
-### 1 : 1 Relationship + Total Participation من الطرفين
+---
 
-حالة نادرة.
+### 1️⃣ 1:1 (Partial , Partial)
+
+يعني:
+
+* العلاقة اختيارية من الطرفين
 
 ### Mapping:
 
-* ندمج الكيانين في Table واحد
-* نحط كل Attributes مع بعض
-
-ليه؟
-
-* مفيش NULL
-* أبسط وأكفأ
-
----
-
-## Step 1️⃣ Mapping of Regular (Strong) Entity
-
-* كل Strong Entity → Table
-* Key → Primary Key
-* Attributes → Columns
-
----
-
-## Step 2️⃣ Mapping of Weak Entity
-
-* Table
-* Owner PK + Partial Key = Composite PK
-* FK موجود ضمن الـ PK
-
----
-
-## Step 3️⃣ Mapping of Binary 1 : 1 Relationship
-
-العلاقة: واحد لواحد
-
-### Mapping:
-
-* نحط FK في واحد من الجدولين
-* نفضل الجدول اللي:
-
-  * Total Participation
-
----
-
-## Step 4️⃣ Mapping of Binary 1 : N Relationship
-
-العلاقة: واحد لمتعدد
-
-### Mapping:
-
-* PK بتاع (1)
-* يتحط FK في Table (N)
+* نحط FK في أي Table
+* FK يسمح بـ NULL
 
 مثال:
 
 ```text
-STUDENT(
-  student_id PK,
-  dept_id FK
+PERSON(
+  person_id PK,
+  passport_id FK NULL
 )
 ```
 
 ---
 
-## Step 5️⃣ Mapping of Binary M : N Relationship
+### 2️⃣ 1:1 (Total , Partial)
 
-العلاقة: متعدد لمتعدد
+يعني:
+
+* طرف لازم يدخل
+* طرف اختياري
 
 ### Mapping:
 
-1. نعمل Table جديد
-2. PK من الطرف الأول
-3. PK من الطرف التاني
-4. الاتنين = Composite PK
-5. Attributes العلاقة تتحط هنا
+* FK يتحط في طرف الـ Total
+* FK NOT NULL
+
+---
+
+### 3️⃣ 1:1 (Total , Total)
+
+يعني:
+
+* الطرفين لازم يدخلوا
+
+### Mapping (أفضل حل):
+
+* ندمج الكيانين في Table واحد
+
+### حل بديل:
+
+* FK NOT NULL + UNIQUE
+
+---
+
+## 🔹 1 : M Relationship
+
+---
+
+### 4️⃣ 1:M (Partial , Partial)
+
+يعني:
+
+* الطرفين اختياريين
+
+### Mapping:
+
+* FK يتحط في M
+* FK يسمح بـ NULL
+
+---
+
+### 5️⃣ 1:M (Total , Partial)
+
+يعني:
+
+* الـ M لازم يدخل
+* الـ 1 اختياري
+
+### Mapping:
+
+* FK في M
+* FK NOT NULL
+
+---
+
+### 6️⃣ 1:M (Partial , Total)
+
+يعني:
+
+* الـ 1 لازم
+* الـ M اختياري
+
+### Mapping:
+
+* FK في M
+* يسمح بـ NULL
+
+---
+
+### 7️⃣ 1:M (Total , Total)
+
+يعني:
+
+* الطرفين لازم
+
+### Mapping:
+
+* FK في M
+* FK NOT NULL
+
+---
+
+## 🔹 M : N Relationship
+
+> في كل حالات M:N → لازم Table جديد
+
+---
+
+### 8️⃣ M:N (Partial , Partial)
+
+### Mapping:
+
+* Table جديد
+* PK من الطرفين
+* Composite PK
+* FK يسمح بـ NULL لو العلاقة اختيارية
+
+---
+
+### 9️⃣ M:N (Total , Partial)
+
+### Mapping:
+
+* Table جديد
+* Composite PK
+* FK بتاع الطرف Total → NOT NULL
+
+---
+
+### 🔟 M:N (Partial , Total)
+
+### Mapping:
+
+* Table جديد
+* Composite PK
+* FK بتاع الطرف Total → NOT NULL
+
+---
+
+### 1️⃣1️⃣ M:N (Total , Total)
+
+### Mapping:
+
+* Table جديد
+* Composite PK
+* كل FKs NOT NULL
 
 مثال:
 
@@ -298,29 +291,15 @@ ENROLLMENT(
 
 ---
 
-## Step 6️⃣ Mapping of N-ary Relationship
+# 4️⃣ Unary Relationship (Self Relationship)
 
-العلاقة بين 3 كيانات أو أكتر.
+### Partial
 
-### Mapping:
+* FK يسمح بـ NULL
 
-* Table جديد
-* PKs لكل الكيانات
-* Composite PK
-* Attributes العلاقة
+### Total
 
----
-
-## Step 7️⃣ Mapping of Unary Relationship
-
-العلاقة:
-
-* Entity مرتبط بنفسه
-
-### Mapping:
-
-* FK في نفس الجدول
-* يشاور على PK
+* FK NOT NULL
 
 مثال:
 
@@ -333,38 +312,23 @@ EMPLOYEE(
 
 ---
 
-# 6️⃣ Participation Constraints & Mapping
+# 5️⃣ Participation Rules Summary
 
-## Total Participation
-
-* الكيان لازم يدخل في العلاقة
-* FK:
-
-  * NOT NULL
-
-## Partial Participation
-
-* العلاقة اختيارية
-* FK:
-
-  * يسمح بـ NULL
+| Participation | FK Rule      |
+| ------------- | ------------ |
+| Partial       | NULL allowed |
+| Total         | NOT NULL     |
 
 ---
 
-# 7️⃣ Summary (الخلاصة الذهبية)
+# 6️⃣ Golden Rules
 
-* ❗ Derived Attribute → مش بيتخزن
-* ❗ Composite Attribute → نفكه
-* ❗ Multi-valued Attribute → Table جديد
-* ❗ Weak Entity → Composite PK
-* ❗ M:N → Table جديد
-* ❗ 1:N → FK في N
-* ❗ 1:1 → FK أو دمج
-* ❗ Unary → FK لنفس الجدول
-
----
-
-الـ README ده يعتبر **مرجع كامل**
-لو فهمته → أي ERD تتحول Database صح 💯
-
-```
+* Derived Attribute → يتحسب وقت ال run time
+* Composite Attribute → نفكه
+* Multi-valued Attribute → Table جديد
+* Weak Entity → Composite PK
+* 1:1 Total Total → دمج
+* 1:M → FK في M
+* M:N → Table جديد
+* Total Participation → NOT NULL
+* Partial Participation → NULL allowed
