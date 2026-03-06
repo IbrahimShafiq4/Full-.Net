@@ -294,12 +294,6 @@ for(int s=0;s<Marks.GetLength(0);s++){
 
 ```csharp
 
-
-```csharp
-ممكن تضع الشرح في الـ README.md بهذا الشكل المنظم والمرئي 👇
-
-⸻
-
 🔢 Traversing a 2D Array Using a Single Loop
 
 لدينا المصفوفة التالية:
