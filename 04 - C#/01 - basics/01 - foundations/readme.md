@@ -10,7 +10,7 @@
         ↓
 [IL - Intermediate Language]
         ↓
-[CLR]
+[CLR - Common Language Runtime]
         ↓
 [Machine Code]
         ↓
