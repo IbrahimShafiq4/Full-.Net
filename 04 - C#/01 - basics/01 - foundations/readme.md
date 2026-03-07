@@ -10,7 +10,7 @@
         ↓
 [IL - Intermediate Language]
         ↓
-[CLR]
+[CLR - Common Language Runtime]
         ↓
 [Machine Code]
         ↓
@@ -235,12 +235,12 @@ Use of unassigned local variable
 
 ## 🌐 CTS vs CLS (بالعقلية الصح)
 
-### CTS
+### CTS - Common Type System
 
 * كل أنواع .NET
 * لكل لغة Types خاصة
 
-### CLS
+### CLS - Common Language Specification
 
 * الأنواع المشتركة
 * تضمن توافق اللغات
