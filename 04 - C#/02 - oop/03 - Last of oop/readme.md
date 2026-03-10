@@ -674,6 +674,151 @@ namespace ComparableExample
 - بعد كده لما نستخدم `employees.Sort()` هيرتب بناءً على الراتب.
 
 ---
+آسف على التأخير، فعلاً فاتني شرح الـ partial والـ sealed في الـ README السابق. هكمل دلوقتي معاك وأضيفهم بالتفصيل، بنفس الأسلوب: شرح بالعامية المصرية، مع أمثلة كاملة (برامج متكاملة) وشرح كل سطر.
+
+---
+
+## 9. Partial Classes - الكلاسات الجزئية
+
+الـ `partial class` هي كلاس مقسوم على أكتر من ملف. يعني ممكن تكتب جزء من الكلاس في ملف، والجزء التاني في ملف تاني، والكومبايلر لما يشوف الكود لمّهم مع بعض ويعتبرهم كلاس واحد.
+
+### إمتى بنستخدمها؟
+- لو شغال في مشروع كبير وفيه أكتر من مطور على نفس الكلاس.
+- لو الكلاس بيتولد بشكل تلقائي (مثلاً من Entity Framework أو Windows Forms) وعايز تضيف فيه حاجات من غير ما تعدل على الملف المتولد.
+
+### مثال: كلاس جزئي لجزئين
+
+هنعمل برنامج بسيط لحساب مرتب موظف، جزء منه في ملف و جزء في ملف تاني. هنا هكتبهم في نفس الملف عشان المثال مختصر، بس الفكرة إنهم ممكن يكونوا في ملفين فعليين.
+
+**البرنامج الكامل:**
+
+```csharp
+using System;
+
+namespace PartialClassExample
+{
+    // الجزء الأول من الكلاس
+    public partial class Employee
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    // الجزء التاني من الكلاس (ممكن يكون في ملف تاني)
+    public partial class Employee
+    {
+        public decimal BasicSalary { get; set; }
+        public decimal Bonus { get; set; }
+
+        public decimal CalculateTotalSalary()
+        {
+            return BasicSalary + Bonus;
+        }
+
+        public void DisplayInfo()
+        {
+            Console.WriteLine($"الموظف: {Name} (ID: {Id})");
+            Console.WriteLine($"الراتب الأساسي: {BasicSalary}, المكافأة: {Bonus}");
+            Console.WriteLine($"الإجمالي: {CalculateTotalSalary()}");
+        }
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            Employee emp = new Employee
+            {
+                Id = 101,
+                Name = "أحمد محمود",
+                BasicSalary = 5000,
+                Bonus = 1000
+            };
+
+            emp.DisplayInfo();
+        }
+    }
+}
+```
+
+### شرح الكود
+
+- الكلمة المفتاحية `partial` قبل `class` بتخبر الكومبايلر إن ده جزء من كلاس أكبر.
+- عندنا جزئين للكلاس `Employee`: الجزء الأول فيه الخواص الأساسية (Id, Name)، والتاني فيه الخواص التانية ودالة الحساب.
+- في `Main` بنستخدم الكلاس بشكل طبيعي جداً، كأنه مكتوب في ملف واحد.
+- الفايدة الحقيقية تبان في المشاريع الكبيرة أو مع الكود المتولد آلياً.
+
+---
+
+## 10. Sealed Classes - الكلاسات المختومة
+
+الـ `sealed class` هي كلاس ممنوع التوريث منه. يعني أي كلاس تاني ميقدرش يعمله `inherit`.
+
+### إمتى بنستخدمها؟
+- لو عايز تمنع أي تعديل على سلوك الكلاس عن طريق الوراثة.
+- لو الكلاس معمول بطريقة معينة والتوريث ممكن يسبب مشاكل (مثلاً لأسباب أمنية أو أداء).
+- بعض الكلاسات الجاهزة في C# زي `String` هي `sealed`.
+
+### مثال: كلاس مختوم
+
+هنعمل كلاس `MathOperations` فيه دوال حسابية، ونخليه sealed. بعد كده نحاول نعمل كلاس تاني يرث منه هنلاقي الخطأ.
+
+**البرنامج الكامل:**
+
+```csharp
+using System;
+
+namespace SealedClassExample
+{
+    // كلاس مختوم
+    public sealed class MathOperations
+    {
+        public int Add(int a, int b)
+        {
+            return a + b;
+        }
+
+        public int Multiply(int a, int b)
+        {
+            return a * b;
+        }
+    }
+
+    // لو حاولنا نعمل inheritance هنا هنشوف خطأ
+    // public class AdvancedMath : MathOperations { } // Compiler Error: cannot derive from sealed type
+
+    class Program
+    {
+        static void Main()
+        {
+            MathOperations math = new MathOperations();
+            Console.WriteLine($"الجمع: {math.Add(10, 5)}");
+            Console.WriteLine($"الضرب: {math.Multiply(10, 5)}");
+        }
+    }
+}
+``` 
+
+### شرح الكود
+
+- `public sealed class MathOperations` معناها إن الكلاس ده مش هيورث.
+- لو حاولت تعمل كلاس تاني يرث منه، الكومبايلر هيقولك خطأ.
+- في الـ `Main` بنستخدم الكلاس بشكل طبيعي، نعمل object ونستخدم دواله.
+- استخدام `sealed` بيساعد في منع التعديل غير المقصود على الكلاس.
+
+---
+
+## 11. الفرق بين Abstract, Sealed, Static, Partial, Concrete
+
+خلينا نعمل مقارنة سريعة:
+
+| نوع الكلاس | يقدر نعمل منه object؟ | يقدر يتورث منه؟ | يقدر يورث من كلاس تاني؟ |
+|---|---|---|---|
+| **Concrete** (عادي) | أيوه | أيوه | أيوه |
+| **Abstract** | لأ (لازم ابن يرث) | أيوه | أيوه |
+| **Sealed** | أيوه | لأ (محدش يورث منه) | أيوه |
+| **Static** | لأ | لأ | لأ (بيحمل static members بس) |
+| **Partial** | (مجرد تقسيم ملفات) نفس الكلاس الأصلي | حسب الكلاس نفسه | حسب الكلاس نفسه |
 
 ## خلاصة
 
