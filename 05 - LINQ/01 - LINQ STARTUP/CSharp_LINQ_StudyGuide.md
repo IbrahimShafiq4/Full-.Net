@@ -1,10 +1,4 @@
 # 📚 دليل C# الشامل: من `var` لـ LINQ — Study Guide للـ Backend Jobs
-
-> **كتبه:** Senior C# Architect & Instructor  
-> **المستوى:** Junior → Mid-level Backend Developer  
-> **اللغة:** عامية مصرية + English Technical Terms  
-> **المشروع:** LinQ01 — C# LINQ Learning Project
-
 ---
 
 ## 📋 جدول المحتويات
