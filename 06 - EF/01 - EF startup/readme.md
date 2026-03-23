@@ -6,7 +6,7 @@
 ![SQL Server](https://img.shields.io/badge/SQL%20Server-Database-red?style=for-the-badge&logo=microsoftsqlserver)
 ![Status](https://img.shields.io/badge/Study%20Guide-Complete-success?style=for-the-badge)
 
-**دليل دراسي متكامل لـ Entity Framework بالعربي المصري**
+**دليل دراسي متكامل لـ Entity Framework**
 
 *مناسب للمذاكرة، الـ Portfolio، وتحضير الـ Interviews*
 
