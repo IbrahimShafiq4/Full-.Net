@@ -1,4 +1,4 @@
-# 07 — URLs 🔗
+# 07 — URLs بالتفصيل الكامل 🔗
 
 > **"URL زي عنوان بيتك — لو كتبته صح، أي حد يوصلك. لو كتبته غلط، حد هيتوه!"**
 
@@ -6,43 +6,21 @@
 
 ## 📋 Table of Contents
 
-- [07 — URLs 🔗](#07--urls-)
-  - [📋 Table of Contents](#-table-of-contents)
-  - [📖 ما هو URL؟](#-ما-هو-url)
-  - [🔍 تشريح الـ URL الكامل](#-تشريح-الـ-url-الكامل)
-  - [🌐 Protocol/Scheme](#-protocolscheme)
-  - [🏢 Domain و Subdomain](#-domain-و-subdomain)
-    - [Domain Structure](#domain-structure)
-    - [أنواع الـ TLDs](#أنواع-الـ-tlds)
-    - [Subdomains الشائعة](#subdomains-الشائعة)
-  - [🔌 Port](#-port)
-    - [Default Ports](#default-ports)
-  - [📂 Path](#-path)
-    - [Path في ASP.NET Core MVC](#path-في-aspnet-core-mvc)
-    - [Path Conventions](#path-conventions)
-  - [❓ Query String](#-query-string)
-    - [Query String في ASP.NET Core](#query-string-في-aspnet-core)
-    - [Query String vs Route Parameters](#query-string-vs-route-parameters)
-  - [#️⃣ Fragment](#️⃣-fragment)
-    - [خصائص مهمة](#خصائص-مهمة)
-  - [🔢 Route Parameters](#-route-parameters)
-    - [في ASP.NET Core](#في-aspnet-core)
-  - [🔤 URL Encoding](#-url-encoding)
-    - [المحارف الخاصة](#المحارف-الخاصة)
-    - [مثال عملي](#مثال-عملي)
-    - [في ASP.NET Core](#في-aspnet-core-1)
-  - [🔍 SEO Friendly URLs](#-seo-friendly-urls)
-    - [قواعد SEO Friendly URLs](#قواعد-seo-friendly-urls)
-    - [Custom Slugs في ASP.NET Core](#custom-slugs-في-aspnet-core)
-  - [📍 Absolute vs Relative URLs](#-absolute-vs-relative-urls)
-    - [Absolute URL](#absolute-url)
-    - [Relative URL](#relative-url)
-    - [في ASP.NET Core](#في-aspnet-core-2)
-  - [🛠️ URLs في ASP.NET Core](#️-urls-في-aspnet-core)
-    - [بناء URLs](#بناء-urls)
-    - [Canonical URLs للـ SEO](#canonical-urls-للـ-seo)
-  - [💼 Interview Questions](#-interview-questions)
-  - [📝 Mini Summary](#-mini-summary)
+- [ما هو URL؟](#-ما-هو-url)
+- [تشريح الـ URL الكامل](#-تشريح-الـ-url-الكامل)
+- [Protocol/Scheme](#-protocolscheme)
+- [Domain و Subdomain](#-domain-و-subdomain)
+- [Port](#-port)
+- [Path](#-path)
+- [Query String](#-query-string)
+- [Fragment](#-fragment)
+- [Route Parameters](#-route-parameters)
+- [URL Encoding](#-url-encoding)
+- [SEO Friendly URLs](#-seo-friendly-urls)
+- [Absolute vs Relative URLs](#-absolute-vs-relative-urls)
+- [URLs في ASP.NET Core](#-urls-في-aspnet-core)
+- [Interview Questions](#-interview-questions)
+- [Mini Summary](#-mini-summary)
 
 ---
 
